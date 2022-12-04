@@ -2,6 +2,7 @@ package sky.pro.algorithmspring.service;
 
 import org.junit.jupiter.api.Test;
 import sky.pro.algorithmspring.exception.IllegalIndexException;
+import sky.pro.algorithmspring.exception.SizeDoesNotMatchException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,13 +26,13 @@ class StringListServiceImplTest {
         assertEquals(checkedItem, "str1");
     }
 
-//    @Test
-//    void checkAddStringWhenLengthNotEquals() {
-//        item = "str1";
-//        index = 0;
-//        stringListServiceImpl.addString(item);
-//        assertThrows(SizeDoesNotMatchException.class,  () -> stringListServiceImpl.addString(item));
-//    }
+    @Test
+    void checkAddStringWhenSizeEqualsLength() {
+        for (index = 0; index < stringArr.length; index++) {
+            stringListServiceImpl.addString("str");
+        }
+        assertThrows(SizeDoesNotMatchException.class,  () -> stringListServiceImpl.addString("str"));
+    }
 
     @Test
     void checkAddStringWhenItemEqualsNull() {
@@ -41,13 +42,38 @@ class StringListServiceImplTest {
     }
 
     @Test
-    void checkAddByIndex() {
+    void checkAddByIndexToBeginning() {
         item = "str00";
         index = 0;
         String checkedItem = stringListServiceImpl.addByIndex(index, item);
 
         assertEquals(checkedItem, "str00");
     }
+
+    @Test
+    void checkAddByIndexToMiddle() {
+        stringListServiceImpl.addString("str1");
+        stringListServiceImpl.addString("str2");
+        stringListServiceImpl.addString("str3");
+        stringListServiceImpl.addString("str4");
+        stringListServiceImpl.addString("str6");
+        stringListServiceImpl.addString("str7");
+
+        item = "str5";
+        index = 4;
+        String checkedItem = stringListServiceImpl.addByIndex(index, item);
+
+        assertEquals(checkedItem, "str5");
+    }
+
+    @Test
+    void checkAddByIndexWhenSizeEqualsLength() {
+        for (index = 0; index < stringArr.length; index++) {
+            stringListServiceImpl.addString("str");
+        }
+        assertThrows(SizeDoesNotMatchException.class,  () -> stringListServiceImpl.addByIndex(10,"str"));
+    }
+
 
     @Test
     void checkAddByIndexWhenItemEqualsNull() {
@@ -148,6 +174,13 @@ class StringListServiceImplTest {
     }
 
     @Test
+    void checkLastIndexOfWhenIndexNotFound() {
+        item = "str11";
+        int checkedIndex = stringListServiceImpl.lastIndexOf(item);
+        assertEquals(checkedIndex, -1);
+    }
+
+    @Test
     void checkGetByIndex() {
         index = 0;
         item = "str6";
@@ -184,12 +217,11 @@ class StringListServiceImplTest {
         assertTrue(checkedIndexIsEmpty);
     }
 
-//    @Test
-//    void checkClearAll() {
-//        String standardStringArr = "";
-//        stringListServiceImpl.clearAll();
-//        assertEquals(stringListServiceImpl.toString(), standardStringArr);
-//    }   я не понимаю как работает метод сlearAll() и что он делает....
+    @Test
+    void checkClearAll() {
+        stringListServiceImpl.clearAll();
+        assertEquals(stringListServiceImpl.getSize(), 0);
+    }
 
     @Test
     void checkToArray() {

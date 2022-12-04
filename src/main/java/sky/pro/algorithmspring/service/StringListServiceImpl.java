@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class StringListServiceImpl implements StringListService{
+public class StringListServiceImpl implements StringListService {
 
     private final String[] stringArr;
     private int size;
@@ -16,9 +16,7 @@ public class StringListServiceImpl implements StringListService{
         this.stringArr = new String[10];
     }
 
-    public StringListServiceImpl(int initSize) {
-        this.stringArr = new String[initSize];
-    }
+//    public StringListServiceImpl(int initSize) {this.stringArr = new String[initSize];}
 
     @Override
     public String addString(String item) {
@@ -102,7 +100,6 @@ public class StringListServiceImpl implements StringListService{
 
     @Override
     public boolean stringListEqualsOtherList(List<String> otherList) {
-
         return Arrays.equals(this.toArray(), otherList.toArray());
     }
 
@@ -141,7 +138,4 @@ public class StringListServiceImpl implements StringListService{
             throw new IllegalIndexException("заданого индекса не существует");
         }
     }
-
-    @Override
-    public String toString() {return Arrays.toString(stringArr);}
 }
