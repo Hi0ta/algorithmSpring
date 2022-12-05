@@ -1,5 +1,4 @@
 package sky.pro.algorithmspring.service;
-
 import java.util.List;
 
 public interface ListService {

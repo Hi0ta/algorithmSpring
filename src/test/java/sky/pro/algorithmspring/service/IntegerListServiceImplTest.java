@@ -1,13 +1,10 @@
 package sky.pro.algorithmspring.service;
-
 import org.junit.jupiter.api.Test;
 import sky.pro.algorithmspring.exception.IllegalIndexException;
 import sky.pro.algorithmspring.exception.SizeDoesNotMatchException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 

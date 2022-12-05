@@ -1,8 +1,6 @@
 package sky.pro.algorithmspring.service;
-
 import sky.pro.algorithmspring.exception.IllegalIndexException;
 import sky.pro.algorithmspring.exception.SizeDoesNotMatchException;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
