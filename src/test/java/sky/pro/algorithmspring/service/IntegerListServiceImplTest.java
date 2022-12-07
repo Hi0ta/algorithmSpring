@@ -1,14 +1,15 @@
 package sky.pro.algorithmspring.service;
 import org.junit.jupiter.api.Test;
 import sky.pro.algorithmspring.exception.IllegalIndexException;
-import sky.pro.algorithmspring.exception.SizeDoesNotMatchException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class IntegerListServiceImplTest {
+
     IntegerListServiceImpl integerListServiceImpl = new IntegerListServiceImpl();
 
     private Integer[] integerArr = new Integer[10];
@@ -18,18 +19,28 @@ public class IntegerListServiceImplTest {
     @Test
     void checkAddInteger() {
         item = 1;
-        index = 0;
         Integer checkedItem = integerListServiceImpl.addInteger(item);
 
-        assertEquals(checkedItem, 1);
+        assertEquals(checkedItem, item);
     }
 
     @Test
     void checkAddIntegerWhenSizeEqualsLength() {
-        for (index = 0; index < integerArr.length; index++) {
-            integerListServiceImpl.addInteger(11);
-        }
-        assertThrows(SizeDoesNotMatchException.class,  () -> integerListServiceImpl.addInteger(11));
+        integerListServiceImpl.addInteger(6);
+        integerListServiceImpl.addInteger(2);
+        integerListServiceImpl.addInteger(7);
+        integerListServiceImpl.addInteger(3);
+        integerListServiceImpl.addInteger(4);
+        integerListServiceImpl.addInteger(1);
+        integerListServiceImpl.addInteger(7);
+        integerListServiceImpl.addInteger(3);
+        integerListServiceImpl.addInteger(4);
+        integerListServiceImpl.addInteger(1);
+        item = 11;
+
+        Integer checkedItem = integerListServiceImpl.addInteger(item);
+
+        assertEquals(checkedItem, item);
     }
 
     @Test
@@ -66,10 +77,13 @@ public class IntegerListServiceImplTest {
 
     @Test
     void checkAddByIndexWhenSizeEqualsLength() {
-        for (index = 0; index < integerArr.length; index++) {
-            integerListServiceImpl.addInteger(33);
+        item = 11;
+        for (index = 0; index == integerArr.length; index++){
+            integerListServiceImpl.addInteger(item);
         }
-        assertThrows(SizeDoesNotMatchException.class,  () -> integerListServiceImpl.addByIndex(10,33));
+            Integer checkedItem = integerListServiceImpl.addInteger(item);
+
+        assertEquals(checkedItem, item);
     }
 
 

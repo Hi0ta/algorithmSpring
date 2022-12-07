@@ -1,32 +1,35 @@
 package sky.pro.algorithmspring.service;
 import sky.pro.algorithmspring.exception.IllegalIndexException;
-import sky.pro.algorithmspring.exception.SizeDoesNotMatchException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class IntegerListServiceImpl implements ListService{
-    private final Integer[] integerArr;
+public class IntegerListServiceImpl implements ListService {
+    private Integer[] integerArr;
     private int size;
 
     public IntegerListServiceImpl() {
         this.integerArr = new Integer[10];
     }
 
-//    public IntegerListServiceImpl(int initSize) {this.integerArr = new Integer[initSize];}
+    // public IntegerListServiceImpl(int initSize) {this.integerArr = new Integer[initSize];}
 
     @Override
     public Integer addInteger(Integer item) {
         validateSize();
         validateItem(item);
+
         integerArr[size++] = item;
         return item;
     }
+
     @Override
     public Integer addByIndex(int index, Integer item) {
         validateSize();
         validateItem(item);
         validateIndex(index);
+
         if (index == size) {
             integerArr[size++] = item;
             return item;
@@ -65,7 +68,9 @@ public class IntegerListServiceImpl implements ListService{
 
     @Override
     public boolean contains(Integer item) {
-        sortSelection(integerArr);
+        Integer begin = 0;
+        Integer end = integerArr.length-1;
+        quickSort(integerArr, begin, end);
         int min = 0;
         int max = integerArr.length - 1;
 
@@ -136,22 +141,19 @@ public class IntegerListServiceImpl implements ListService{
         return Arrays.copyOf(integerArr, size);
     }
 
-    private void validateItem(Integer item) {
-        if (item == null) {
-            throw new NullPointerException("Integer не должeн быть null");
-        }
-    }
 
     private void validateSize() {
         if (size == integerArr.length) {
-            throw new SizeDoesNotMatchException("size не должен быть равен длине массива");
+  //          throw new SizeDoesNotMatchException("size не должен быть равен длине массива");
+            grow();
         }
     }
 
-    private void validateIndex(int index) {
-        if (index < 0 || index > size) {
-            throw new IllegalIndexException("заданого индекса не существует");
-        }
+    private void grow() {
+        int index = integerArr.length;
+        size = (int) Math.ceil(integerArr.length * 1.5);
+        integerArr = Arrays.copyOf(integerArr,size);
+        size = index;
     }
 
 
@@ -161,23 +163,42 @@ public class IntegerListServiceImpl implements ListService{
         integerArr[indexB] = tmp;
     }
 
+    public void quickSort(Integer[] integerArr, Integer begin, Integer end) {
+        if (begin < end) {
+            Integer partitionIndex = partition(integerArr, begin, end);
 
-    private void sortSelection(Integer[] integerArr) {
-        for (int i = 0; i < integerArr.length - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < integerArr.length; j++) {
-                if (integerArr[j] < integerArr[minElementIndex]) {
-                    minElementIndex = j;
-                }
+            quickSort(integerArr, begin, partitionIndex - 1);
+            quickSort(integerArr, partitionIndex + 1, end);
+        }
+    }
+
+    private Integer partition(Integer[] integerArr, Integer begin, Integer end) {
+        Integer pivot = integerArr[end];
+        Integer i = (begin - 1);
+        for (Integer j = begin; j < end; j++) {
+            if (integerArr[j] <= pivot) {
+                i++;
+
+                swapElements(integerArr, i, j);
             }
-            swapElements(integerArr, i, minElementIndex);
+        }
+        swapElements(integerArr, i + 1, end);
+        return i + 1;
+    }
+
+    private void validateIndex(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalIndexException("заданого индекса не существует");
+        }
+    }
+
+    private void validateItem(Integer item) {
+        if (item == null) {
+            throw new NullPointerException("Integer не должeн быть null");
         }
     }
 }
-
-
 //    @Override
 //    public String toString() {
 //        return Arrays.toString(integerArr);
 //    }
-//}
